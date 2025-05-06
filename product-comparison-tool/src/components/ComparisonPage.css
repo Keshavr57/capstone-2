@@ -1,0 +1,128 @@
+/* ComparisonPage.css - Styles for the comparison page */
+
+.comparison-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+  
+  .comparison-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
+  
+  .comparison-header h1 {
+    font-size: 2rem;
+    color: #1e3a8a;
+  }
+  
+  .back-to-products {
+    background-color: #f3f4f6;
+    color: #4b5563;
+    border: 1px solid #d1d5db;
+  }
+  
+  .back-to-products:hover {
+    background-color: #e5e7eb;
+    color: #1f2937;
+  }
+  
+  .no-products {
+    text-align: center;
+    padding: 3rem;
+    background-color: #f9fafb;
+    border-radius: 10px;
+  }
+  
+  .no-products p {
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+    color: #6b7280;
+  }
+  
+  .comparison-table-container {
+    overflow-x: auto;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  }
+  
+  .comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .comparison-table th,
+  .comparison-table td {
+    padding: 1rem;
+    text-align: center;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  
+  .comparison-table th {
+    background-color: #f9fafb;
+    font-weight: 600;
+    color: #1f2937;
+  }
+  
+  .comparison-table th:first-child,
+  .comparison-table td:first-child {
+    text-align: left;
+    background-color: #f9fafb;
+    font-weight: 600;
+    color: #4b5563;
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
+  }
+  
+  .comparison-image {
+    max-width: 120px;
+    max-height: 120px;
+    object-fit: contain;
+  }
+  
+  .price {
+    font-weight: 700;
+    color: #047857;
+  }
+  
+  .spec-name {
+    font-weight: 500;
+    color: #4b5563;
+  }
+  
+  .comparison-table tr:hover {
+    background-color: #f3f4f6;
+  }
+  
+  .comparison-table tr:hover td:first-child {
+    background-color: #e5e7eb;
+  }
+  
+  /* Responsive styles */
+  @media (max-width: 768px) {
+    .comparison-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+    
+    .comparison-container {
+      padding: 1rem;
+    }
+    
+    .comparison-table th,
+    .comparison-table td {
+      padding: 0.75rem 0.5rem;
+      font-size: 0.9rem;
+    }
+    
+    .comparison-image {
+      max-width: 80px;
+      max-height: 80px;
+    }
+  }
