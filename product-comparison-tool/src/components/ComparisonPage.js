@@ -9,7 +9,7 @@ function ComparisonPage() {
   const location = useLocation();
   const selectedIds = location.state?.productIds || [1, 2, 3];
 
-  // Filter out only the selected products from the full product list
+
   const selectedProducts = products.filter(product =>
     selectedIds.includes(product.id)
   );
@@ -37,13 +37,13 @@ function ComparisonPage() {
         </div>
 
         {selectedProducts.length === 0 ? (
-          // If no products selected, show message and link to product list
+          
           <div className="no-products">
             <p>No products selected for comparison.</p>
             <Link to="/products" className="btn">Select Products</Link>
           </div>
         ) : (
-          // If products are selected, render comparison table
+          
           <div className="comparison-table-container">
             <table className="comparison-table">
               <thead>
@@ -55,7 +55,7 @@ function ComparisonPage() {
                 </tr>
               </thead>
               <tbody>
-                {/* Product Images */}
+               
                 <tr>
                   <td>Image</td>
                   {selectedProducts.map(product => (
@@ -69,7 +69,7 @@ function ComparisonPage() {
                   ))}
                 </tr>
 
-                {/* Product Prices */}
+              
                 <tr>
                   <td>Price</td>
                   {selectedProducts.map(product => (
@@ -79,7 +79,6 @@ function ComparisonPage() {
                   ))}
                 </tr>
 
-                {/* Product Ratings */}
                 <tr>
                   <td>Rating</td>
                   {selectedProducts.map(product => (
@@ -96,7 +95,7 @@ function ComparisonPage() {
                   ))}
                 </tr>
 
-                {/* Dynamic Specification Rows */}
+          
                 {specKeys.map(key => (
                   <tr key={key}>
                     <td className="spec-name">

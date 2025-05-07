@@ -7,7 +7,6 @@ import './ProductList.css';
 function ProductList() {
   const [selectedProducts, setSelectedProducts] = useState([]);
 
-  // Toggle product selection for comparison
   const toggleProductSelection = (productId) => {
     const isSelected = selectedProducts.includes(productId);
 
