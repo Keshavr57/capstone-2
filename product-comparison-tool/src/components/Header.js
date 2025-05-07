@@ -15,9 +15,7 @@ function Header() {
           <li><Link to="/compare">Compare</Link></li>
         </ul>
       </nav>
-      <div className="header-actions">
-        <Link to="/login" className="login-btn">Login</Link>
-      </div>
+      
     </header>
   );
 }

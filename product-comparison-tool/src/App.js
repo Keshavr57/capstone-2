@@ -17,7 +17,7 @@ function App() {
           </Link>
         </div>
         <div className="home-banner">
-          <img src="/api/placeholder/600/400" alt="Product comparison illustration" />
+          <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=400&fit=crop" alt="Product comparison illustration" />
         </div>
       </main>
     </div>

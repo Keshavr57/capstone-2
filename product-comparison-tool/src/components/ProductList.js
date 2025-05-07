@@ -9,11 +9,11 @@ function ProductList() {
 
   // Toggle product selection for comparison
   const toggleProductSelection = (productId) => {
-    if (selectedProducts.includes(productId)) {
-      // If already selected, remove it
+    const isSelected = selectedProducts.includes(productId);
+
+    if (isSelected) {
       setSelectedProducts(selectedProducts.filter(id => id !== productId));
     } else {
-      // If not selected, add it (limit to 3 products for comparison)
       if (selectedProducts.length < 3) {
         setSelectedProducts([...selectedProducts, productId]);
       } else {
@@ -29,10 +29,10 @@ function ProductList() {
         <div className="product-list-header">
           <h1>Browse Products</h1>
           <p>Select products to compare or view details</p>
-          
+
           {selectedProducts.length > 0 && (
             <div className="comparison-bar">
-              <p>{selectedProducts.length} products selected</p>
+              <p>{selectedProducts.length} product(s) selected</p>
               <Link 
                 to="/compare" 
                 state={{ productIds: selectedProducts }}
@@ -45,34 +45,41 @@ function ProductList() {
         </div>
 
         <div className="product-grid">
-          {products.map(product => (
-            <div 
-              key={product.id} 
-              className={`product-card ${selectedProducts.includes(product.id) ? 'selected' : ''}`}
-            >
-              <div className="product-image">
-                <img src={product.image} alt={product.name} />
-              </div>
-              <div className="product-info">
-                <h3>{product.name}</h3>
-                <p className="product-price">${product.price.toFixed(2)}</p>
-                <div className="product-rating">
-                  <span className="stars">
-                    {'★'.repeat(Math.floor(product.rating))}
-                    {product.rating % 1 >= 0.5 ? '½' : ''}
-                    {'☆'.repeat(5 - Math.ceil(product.rating))}
-                  </span>
-                  <span className="rating-number">{product.rating}</span>
+          {products.map(product => {
+            const isSelected = selectedProducts.includes(product.id);
+
+            return (
+              <div 
+                key={product.id} 
+                className={`product-card ${isSelected ? 'selected' : ''}`}
+              >
+                <div className="product-image">
+                  <img src={product.image} alt={product.name} />
                 </div>
-                <button 
-                  onClick={() => toggleProductSelection(product.id)}
-                  className={`compare-toggle ${selectedProducts.includes(product.id) ? 'selected' : ''}`}
-                >
-                  {selectedProducts.includes(product.id) ? 'Selected' : 'Compare'}
-                </button>
+
+                <div className="product-info">
+                  <h3>{product.name}</h3>
+                  <p className="product-price">${product.price.toFixed(2)}</p>
+
+                  <div className="product-rating">
+                    <span className="stars">
+                      {'★'.repeat(Math.floor(product.rating))}
+                      {product.rating % 1 >= 0.5 ? '½' : ''}
+                      {'☆'.repeat(5 - Math.ceil(product.rating))}
+                    </span>
+                    <span className="rating-number">{product.rating}</span>
+                  </div>
+
+                  <button 
+                    onClick={() => toggleProductSelection(product.id)}
+                    className={`compare-toggle ${isSelected ? 'selected' : ''}`}
+                  >
+                    {isSelected ? 'Selected' : 'Compare'}
+                  </button>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </main>
     </div>

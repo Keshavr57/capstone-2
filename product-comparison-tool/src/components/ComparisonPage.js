@@ -5,25 +5,22 @@ import products from '../productsData';
 import './ComparisonPage.css';
 
 function ComparisonPage() {
-  // Get the selected product IDs from navigation state
-  // If no products were passed, we'll just show a default selection
+  
   const location = useLocation();
   const selectedIds = location.state?.productIds || [1, 2, 3];
-  
-  // Filter products to show only selected ones
-  const selectedProducts = products.filter(product => 
+
+  // Filter out only the selected products from the full product list
+  const selectedProducts = products.filter(product =>
     selectedIds.includes(product.id)
   );
 
-  // Get all unique spec keys from selected products
+
   const getAllSpecKeys = () => {
     const allKeys = new Set();
     selectedProducts.forEach(product => {
-      Object.keys(product.specs).forEach(key => {
-        allKeys.add(key);
-      });
+      Object.keys(product.specs).forEach(key => allKeys.add(key));
     });
-    return Array.from(allKeys);
+    return Array.from(allKeys); // Convert Set to Array
   };
 
   const specKeys = getAllSpecKeys();
@@ -40,11 +37,13 @@ function ComparisonPage() {
         </div>
 
         {selectedProducts.length === 0 ? (
+          // If no products selected, show message and link to product list
           <div className="no-products">
             <p>No products selected for comparison.</p>
             <Link to="/products" className="btn">Select Products</Link>
           </div>
         ) : (
+          // If products are selected, render comparison table
           <div className="comparison-table-container">
             <table className="comparison-table">
               <thead>
@@ -56,18 +55,21 @@ function ComparisonPage() {
                 </tr>
               </thead>
               <tbody>
+                {/* Product Images */}
                 <tr>
                   <td>Image</td>
                   {selectedProducts.map(product => (
                     <td key={product.id}>
-                      <img 
-                        src={product.image} 
+                      <img
+                        src={product.image}
                         alt={product.name}
-                        className="comparison-image" 
+                        className="comparison-image"
                       />
                     </td>
                   ))}
                 </tr>
+
+                {/* Product Prices */}
                 <tr>
                   <td>Price</td>
                   {selectedProducts.map(product => (
@@ -76,6 +78,8 @@ function ComparisonPage() {
                     </td>
                   ))}
                 </tr>
+
+                {/* Product Ratings */}
                 <tr>
                   <td>Rating</td>
                   {selectedProducts.map(product => (
@@ -91,11 +95,13 @@ function ComparisonPage() {
                     </td>
                   ))}
                 </tr>
-                
-                {/* Display all specs */}
+
+                {/* Dynamic Specification Rows */}
                 {specKeys.map(key => (
                   <tr key={key}>
-                    <td className="spec-name">{key.charAt(0).toUpperCase() + key.slice(1)}</td>
+                    <td className="spec-name">
+                      {key.charAt(0).toUpperCase() + key.slice(1)}
+                    </td>
                     {selectedProducts.map(product => (
                       <td key={product.id}>
                         {product.specs[key] || '—'}
