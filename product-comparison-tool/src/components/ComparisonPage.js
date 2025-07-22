@@ -1,26 +1,36 @@
-import React from 'react';
-import { useLocation, Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import Header from './Header';
-import products from '../productsData';
 import './ComparisonPage.css';
 
 function ComparisonPage() {
-  
-  const location = useLocation();
-  const selectedIds = location.state?.productIds || [1, 2, 3];
+  const [products, setProducts] = useState([]);
+  const [selectedProducts, setSelectedProducts] = useState([]);
 
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch('http://localhost:5050/products');
+        const data = await response.json();
+        setProducts(data);
 
-  const selectedProducts = products.filter(product =>
-    selectedIds.includes(product.id)
-  );
+        const selectedIds = JSON.parse(localStorage.getItem('compareIds')) || [];
+        const filtered = data.filter(p => selectedIds.includes(p.id));
+        setSelectedProducts(filtered);
+      } catch (err) {
+        console.error("❌ Failed to load products", err);
+      }
+    };
 
+    fetchProducts();
+  }, []);
 
   const getAllSpecKeys = () => {
     const allKeys = new Set();
     selectedProducts.forEach(product => {
       Object.keys(product.specs).forEach(key => allKeys.add(key));
     });
-    return Array.from(allKeys); // Convert Set to Array
+    return Array.from(allKeys);
   };
 
   const specKeys = getAllSpecKeys();
@@ -37,13 +47,11 @@ function ComparisonPage() {
         </div>
 
         {selectedProducts.length === 0 ? (
-          
           <div className="no-products">
             <p>No products selected for comparison.</p>
             <Link to="/products" className="btn">Select Products</Link>
           </div>
         ) : (
-          
           <div className="comparison-table-container">
             <table className="comparison-table">
               <thead>
@@ -55,7 +63,6 @@ function ComparisonPage() {
                 </tr>
               </thead>
               <tbody>
-               
                 <tr>
                   <td>Image</td>
                   {selectedProducts.map(product => (
@@ -69,7 +76,6 @@ function ComparisonPage() {
                   ))}
                 </tr>
 
-              
                 <tr>
                   <td>Price</td>
                   {selectedProducts.map(product => (
@@ -95,7 +101,6 @@ function ComparisonPage() {
                   ))}
                 </tr>
 
-          
                 {specKeys.map(key => (
                   <tr key={key}>
                     <td className="spec-name">

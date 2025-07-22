@@ -1,11 +1,26 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Header from './Header';
-import products from '../productsData';
+import axios from 'axios'; // ✅ import axios
+
 import './ProductList.css';
 
 function ProductList() {
+  const [products, setProducts] = useState([]); // ✅ Track fetched products
   const [selectedProducts, setSelectedProducts] = useState([]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const res = await axios.get('http://localhost:5050/products');
+        setProducts(res.data); // ✅ Store product data
+      } catch (err) {
+        alert('Error fetching products: ' + err.message);
+      }
+    };
+
+    fetchProducts(); // ✅ Call it inside useEffect
+  }, []); // ✅ Dependency array to avoid infinite loop
 
   const toggleProductSelection = (productId) => {
     const isSelected = selectedProducts.includes(productId);

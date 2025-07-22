@@ -1,78 +1,51 @@
-// import React, { useState } from 'react';
-// import { Link, useNavigate } from 'react-router-dom';
-// import Header from './Header';
-// import './Login.css';
+import React, { useState } from 'react';
+import axios from 'axios';
+import { Link, useNavigate } from 'react-router-dom';
+import './AuthForm.css';
 
-// function Login() {
-//   const [email, setEmail] = useState('');
-//   const [password, setPassword] = useState('');
-//   const navigate = useNavigate();
+function Login() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
-//   // Handle form submission (no actual authentication, just navigation)
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-//     // In a real app, we would authenticate with a backend here
-//     console.log('Login attempt with:', { email });
-    
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await axios.post('http://localhost:5050/login', { email, password });
+      alert(res.data.message);
+      localStorage.setItem('user', JSON.stringify({ email }));
+      navigate('/');
+    } catch (err) {
+      alert(err.response?.data?.message || '❌ Login failed');
+    }
+  };
 
-//     navigate('/products');
-//   };
+  return (
+    <div className="auth-container">
+      <form className="auth-form" onSubmit={handleLogin}>
+        <h2>Login</h2>
+        <input
+          type="email"
+          placeholder="✉️ Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+        <input
+          type="password"
+          placeholder="🔐 Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+        <button type="submit">🔓 Login</button>
+        <p>
+          Don't have an account? <Link to="/register">Register</Link>
+        </p>
+        <Link to="/">🏠 Back to Home</Link>
+      </form>
+    </div>
+  );
+}
 
-
-//   const handleGuestLogin = () => {
-//     navigate('/products');
-//   };
-
-//   return (
-//     <div className="app">
-//       <Header />
-//       <main className="login-container">
-//         <div className="login-form-container">
-//           <h1>Login to Your Account</h1>
-//           <form className="login-form" onSubmit={handleSubmit}>
-//             <div className="form-group">
-//               <label htmlFor="email">Email</label>
-//               <input
-//                 type="email"
-//                 id="email"
-//                 value={email}
-//                 onChange={(e) => setEmail(e.target.value)}
-//                 placeholder="Enter your email"
-//                 required
-//               />
-//             </div>
-//             <div className="form-group">
-//               <label htmlFor="password">Password</label>
-//               <input
-//                 type="password"
-//                 id="password"
-//                 value={password}
-//                 onChange={(e) => setPassword(e.target.value)}
-//                 placeholder="Enter your password"
-//                 required
-//               />
-//             </div>
-//             <div className="forgot-password">
-//               <Link to="#">Forgot password?</Link>
-//             </div>
-//             <button type="submit" className="btn login-btn">Login</button>
-//             <button 
-//               type="button" 
-//               className="btn guest-btn"
-//               onClick={handleGuestLogin}>
-//               Continue as Guest
-//             </button>
-//           </form>
-//           <div className="signup-prompt">
-//             <p>Don't have an account? <Link to="#">Sign up</Link></p>
-//           </div>
-//         </div>
-//         <div className="login-image">
-//           <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?w=500&h=600&fit=crop" alt="Login illustration" />
-//         </div>
-//       </main>
-//     </div>
-//   );
-// }
-
-// export default Login;
+export default Login;
